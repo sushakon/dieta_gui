@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import TclError, ttk
 from options import weeks
 
+def hide_frame(frame):
+    frame.destroy()
+
 def create_recipes_frame(container):
     global weeks
     frame = ttk.Frame(container)
@@ -9,6 +12,7 @@ def create_recipes_frame(container):
     # grid layout for the recipes frame
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=3)
+    frame.grid(column=0, row=0)
     
     # Weeks
     for i in range(4):
@@ -25,5 +29,3 @@ def create_recipes_frame(container):
 
     for widget in frame.winfo_children():
         widget.grid(padx=5, pady=5)
-    
-    return frame
