@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import TclError, ttk
 
+
+###############################################################################
+# OPTIONS #####################################################################
+###############################################################################
+
 weights = [0, 0, 0, 0]
 weeks = 0
 confirm = False
@@ -135,7 +140,7 @@ def create_options_frame(container):
                             bg="#333241", fg="#cbcbcb",
                             activebackground="#333241",
                             activeforeground="#cbcbcb",
-                            command= lambda: [is_confirmed(), is_options(), hide_frame(frame)])
+                            command= lambda: [is_confirmed(), is_options(), hide_frame(frame), create_recipes_frame(container)])
         confirm.grid(column=3, row=8)
         
         empty = tk.Label(frame,
@@ -232,3 +237,63 @@ def is_confirmed():
 def is_options():
     global options
     options = False
+    
+###############################################################################
+# RECIPES #####################################################################
+###############################################################################
+
+def create_recipes_frame(container):
+    global weeks
+    frame = tk.Frame(container,
+                    bg="#191919",
+                    width=790,
+                    height=490, bd=0)
+    
+    frame_menu = tk.Frame(container,
+            bg="#1d1947",
+            width=75,
+            height=505)
+    
+    frame_buttons = tk.Frame(frame_menu,
+                bg="#1d1947")
+
+    
+    # grid layout for the recipes frame
+    # frame.columnconfigure(0, weight=1)
+    # frame.columnconfigure(0, weight=3)
+    frame.place(x=100, y=10)
+    frame_buttons.place(x=10, y=10)
+    frame_menu.place(x=15, y=10)
+    
+    # Weeks
+    for i in range(4):
+        tk.Label(frame,
+                 text='Tydzień {0}:'.format(i),
+                 bg="#191919", fg="#cbcbcb",
+                 font=("Calibri", 20)).grid(column=0, row=i, sticky=tk.W)
+        button = tk.Button(frame,
+                           text='PRZEPISY'.format(i),
+                           font=("Calibri", 20),
+                           bg="#333241", fg="#cbcbcb",
+                           activebackground="#333241",
+                           activeforeground="#cbcbcb")
+        button.grid(column=1, row=i, sticky=tk.W)
+        
+    # Menu
+    menu_button = tk.Button(frame_buttons,
+                            text='Menu')
+    menu_button.grid(column=0, row=0)    
+    
+    graph_button = tk.Button(frame_buttons,
+                             text='Graph')
+    graph_button.grid(column=0, row=1)
+    
+    products_button = tk.Button(frame_buttons,
+                                text='Products')
+    products_button.grid(column=0, row=2)
+
+    for widget in frame.winfo_children():
+        widget.grid(padx=5, pady=5)
+        
+    for widget in frame_buttons.winfo_children():
+        widget.grid(pady=20)
