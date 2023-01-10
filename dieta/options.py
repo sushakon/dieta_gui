@@ -1,26 +1,12 @@
 import tkinter as tk
 from tkinter import TclError, ttk
 
-WEIGHTS = [0, 0, 0, 0]
-WEEKS = 0
-CONFIRM = True
+weights = [0, 0, 0, 0]
+weeks = 0
+confirm = False
+options = True
 
 weight_options = [1, 2, 3, 4]
-
-def option_changed_cal(val):
-    WEIGHTS[0] = (5 - int(val))
-
-def option_changed_f(val):
-    WEIGHTS[1] = (5 - int(val))
-        
-def option_changed_c(val):
-    WEIGHTS[2] = (5 - int(val))
-    
-def option_changed_p(val):
-    WEIGHTS[3] = (5 - int(val))
-    
-def option_changed_week(val):
-    WEEK = int(val)
 
 def create_options_frame(container):
 
@@ -88,20 +74,28 @@ def create_options_frame(container):
 
     return frame
 
-def is_confirmed():
-    CONFIRM = True
-
 def create_weeks_next_frame(container):
+    
+    def is_confirmed():
+        global confirm
+        confirm = True
+    
+    def is_options():
+        global options
+        options = False
+    
     frame = ttk.Frame(container)
 
     frame.columnconfigure(0, weight=1)
     
     #label
-    label = ttk.Label(frame, text='Number of weeks:').grid(column=0, row=0, sticky=tk.W)
+    label = ttk.Label(frame, text='Number of weeks:')
+    label.grid(column=0, row=0, sticky=tk.W)
 
     confirm = ttk.Button(frame,
                          text='Confirm',
-                         command= is_confirmed()).grid(column=0, row=5)
+                         command= lambda: [is_confirmed(), is_options])
+    confirm.grid(column=0, row=5)
     
     # Number of weeks radiobox
     weeks = tk.IntVar()
@@ -136,5 +130,26 @@ def create_weeks_next_frame(container):
 
     for widget in frame.winfo_children():
         widget.grid(padx=5, pady=5)
-
+        
     return frame
+
+
+def option_changed_cal(val):
+    global weights
+    weights[0] = (5 - int(val))
+
+def option_changed_f(val):
+    global weights
+    weights[1] = (5 - int(val))
+        
+def option_changed_c(val):
+    global weights
+    weights[2] = (5 - int(val))
+    
+def option_changed_p(val):
+    global weights
+    weights[3] = (5 - int(val))
+    
+def option_changed_week(val):
+    global weeks
+    weeks = int(val)        

@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import TclError, ttk
-from options import WEEKS
+from options import weeks
 
 def create_recipes_frame(container):
+    global weeks
     frame = ttk.Frame(container)
     
     # grid layout for the recipes frame
